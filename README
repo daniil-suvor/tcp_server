@@ -2,7 +2,13 @@
 Для этого сначала соберите контейнер:
   docker build -t docker_tcp_server .
 А затем запустите его:
-  docker run -it -p 51413:51413 docker_tcp_server
+  docker run -v slurm-storage:/data -it -p 51413:51413 docker_tcp_server
+
+Данные хранятся в текстовом томе slurm-storage:/data
+Получить их можно, например, передав том контейнеру с образом Ubuntu:
+  docker run --rm -v slurm-storage:/data -it ubuntu:20.10 /bin/bash
+И просто вывести содержимое файла в терминале:
+    cat data/data.txt
 
 Или просто запускайте сервер из консоли командой:
   python3 tcp_server.py
